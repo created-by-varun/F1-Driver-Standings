@@ -55,12 +55,33 @@ const renderList = year => {
 		`;
     const title = createNode('div');
     title.classList = 'c-headline';
-    title.innerHTML = `<h4 class="c-headline__title"><small class="u-text--danger">FORMULA 1</small><br />Driver Standings <small class="u-text--secondary">(${year == 'current' ? '2019' : year})</small></h4><span class="c-chip ${year == 'current' ? 'c-chip--success' : 'c-chip--secondary'}">Season Completed'</span>
-    <br> <h2> Hello </h2> `;
+    title.innerHTML = `<h4 class="c-headline__title"><small class="u-text--danger">FORMULA 1</small><br />Driver Standings <small class="u-text--secondary">(${year == 'current' ? '2019' : year})</small></h4><span class="c-chip ${year == 'current' ? 'c-chip--success' : 'c-chip--secondary'}">Season Completed</span>`;
 
     const first_place = createNode('div');
-    first_place.classList = 'first_place_card';
-    first_place.innerHTML = "Hello";
+    first_place.classList = 'c-winner';
+
+    data.MRData.StandingsTable.StandingsLists[0].DriverStandings.forEach(item => {
+      if(item.position == 1){
+    first_place.innerHTML = `
+    <div class="c-winner__image">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="8" r="7"></circle>
+        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+      </svg>
+    </div>
+    <div class="c-winner__content">
+								<small class="c-winner__badge">winner</small>
+								<h5 class="c-winner__title">${item.Driver.givenName} ${item.Driver.familyName}</h5>
+								<div class="c-winner__info">
+									<small class="c-winner__info-item"><strong>${item.Constructors[0].name}</strong></small>
+									<small class="c-winner__info-item">Wins: <strong>${item.wins}</strong></small>
+									<small class="c-winner__info-item">Points: <strong>${item.points}</strong></small>
+								</div>
+							</div>
+      
+    `;
+      }
+    });
 
 
     append(wrapper, title);
@@ -80,30 +101,6 @@ const renderList = year => {
 
       if (item.position == 1) {
         tr.querySelector('.c-place').classList.add('c-place--first');
-
-        if (year != 'current') {
-          const firstPlaceCard = createNode('div');
-          firstPlaceCard.classList = 'c-winner';
-          firstPlaceCard.innerHTML = `
-							<div class="c-winner__image">
-								<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-									<circle cx="12" cy="8" r="7"></circle>
-									<polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
-								</svg>
-							</div>
-							<div class="c-winner__content">
-								<small class="c-winner__badge">winner</small>
-								<h5 class="c-winner__title">${item.Driver.givenName} ${item.Driver.familyName}</h5>
-								<div class="c-winner__info">
-									<small class="c-winner__info-item"><strong>${item.Constructors[0].name}</strong></small>
-									<small class="c-winner__info-item">Wins: <strong>${item.wins}</strong></small>
-									<small class="c-winner__info-item">Points: <strong>${item.points}</strong></small>
-								</div>
-							</div>
-						`;
-          table.parentNode.insertBefore(firstPlaceCard, table);
-          console.log('sup');
-        }
 
       } else if (item.position == 2) {
         tr.querySelector('.c-place').classList.add('c-place--second');
