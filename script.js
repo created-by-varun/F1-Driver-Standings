@@ -63,7 +63,7 @@ const emptyState = () => {
 
 // Render Driver Standings
 const renderList = year => {
-  const url = `https://ergast.com/api/f1/${year}/driverStandings.json`;
+  const url = `https://ergast.com/api/f1/2019/driverStandings.json`;
   emptyState();
   fetch(url).
   then(response => {
@@ -149,39 +149,6 @@ document.getElementById('test').addEventListener('click', () => {
   document.getElementById('test').classList.toggle('c-toggle--active');
 });
 
-// season select
-const createSeasonSelect = () => {
-  const newSelect = createNode('div');
-  newSelect.innerHTML = `
-		<label class="c-field__label">Season:</label>
-		<select class="c-field__input"></select>
-	`;
-  newSelect.classList = 'c-field';
-  newSelect.style.position = 'relative';
-  newSelect.style.zIndex = 300;
-  let currentYear = new Date().getFullYear();
-  for (let i = 0; i < 20; i++) {
-    let itemYear = currentYear - i;
-    let newOption = createNode('option');
-    if (i == 0) {
-      newOption.setAttribute('selected', true);
-      newOption.innerHTML = `${itemYear} (current)`;
-      newOption.setAttribute('value', 'current');
-    } else {
-      newOption.innerHTML = itemYear;
-      newOption.setAttribute('value', itemYear);
-    }
-    append(newSelect.querySelector('.c-field__input'), newOption);
-  }
-  newSelect.querySelector('.c-field__input').addEventListener('change', e => {
-    document.getElementById('wrapper').innerHTML = '';
-    renderList(e.target.value);
-    toggleDrawer();
-  });
-  append(drawer, newSelect);
-};
-
-createSeasonSelect();
 
 renderList('current');
 
