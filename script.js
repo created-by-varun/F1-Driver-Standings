@@ -57,12 +57,14 @@ const renderList = year => {
     title.classList = 'c-headline';
     title.innerHTML = `<h4 class="c-headline__title"><small class="u-text--danger">FORMULA 1</small><br />Driver Standings <small class="u-text--secondary">(${year == 'current' ? '2019' : year})</small></h4><span class="c-chip ${year == 'current' ? 'c-chip--success' : 'c-chip--secondary'}">Season Completed</span>`;
 
+
+    // Render first place card
     const first_place = createNode('div');
     first_place.classList = 'c-winner';
 
     data.MRData.StandingsTable.StandingsLists[0].DriverStandings.forEach(item => {
-      if(item.position == 1){
-    first_place.innerHTML = `
+      if (item.position == 1) {
+        first_place.innerHTML = `
     <div class="c-winner__image">
       <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="8" r="7"></circle>
@@ -70,16 +72,14 @@ const renderList = year => {
       </svg>
     </div>
     <div class="c-winner__content">
-								<small class="c-winner__badge">winner</small>
-								<h5 class="c-winner__title">${item.Driver.givenName} ${item.Driver.familyName}</h5>
-								<div class="c-winner__info">
-									<small class="c-winner__info-item"><strong>${item.Constructors[0].name}</strong></small>
-									<small class="c-winner__info-item">Wins: <strong>${item.wins}</strong></small>
-									<small class="c-winner__info-item">Points: <strong>${item.points}</strong></small>
-								</div>
-							</div>
-      
-    `;
+        <small class="c-winner__badge">winner</small>
+        <h5 class="c-winner__title">${item.Driver.givenName} ${item.Driver.familyName}</h5>
+        <div class="c-winner__info">
+          <small class="c-winner__info-item"><strong>${item.Constructors[0].name}</strong></small>
+          <small class="c-winner__info-item">Wins: <strong>${item.wins}</strong></small>
+          <small class="c-winner__info-item">Points: <strong>${item.points}</strong></small>
+        </div>
+    </div>`;
       }
     });
 
@@ -87,6 +87,7 @@ const renderList = year => {
     append(wrapper, title);
     append(wrapper, first_place);
     append(wrapper, table);
+    
     data.MRData.StandingsTable.StandingsLists[0].DriverStandings.forEach(item => {
       const tableBody = table.querySelector('tbody');
       let tr = createNode('tr');
