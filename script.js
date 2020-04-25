@@ -29,6 +29,8 @@ const emptyState = () => {
   }, 500);
 };
 
+
+// fetch driver info 
 const renderList = year => {
   const url = `https://ergast.com/api/f1/2019/driverStandings.json`;
   emptyState();
@@ -83,11 +85,11 @@ const renderList = year => {
       }
     });
 
-
     append(wrapper, title);
     append(wrapper, first_place);
     append(wrapper, table);
-    
+
+    // table data
     data.MRData.StandingsTable.StandingsLists[0].DriverStandings.forEach(item => {
       const tableBody = table.querySelector('tbody');
       let tr = createNode('tr');
@@ -100,6 +102,7 @@ const renderList = year => {
 					<td class="c-table__cell c-table__cell--points u-text--right"><strong>${item.points}</strong></td>
 				`;
 
+      // add class to top 3 positions
       if (item.position == 1) {
         tr.querySelector('.c-place').classList.add('c-place--first');
 
