@@ -1,9 +1,3 @@
-console.clear();
-const wrapper = document.getElementById('wrapper');
-const header = document.getElementById('header');
-const drawer = document.getElementById('drawer');
-const swipeZone = document.getElementById('swipeZone');
-
 const createNode = element => {
   return document.createElement(element);
 };
@@ -12,33 +6,7 @@ const append = (parent, el) => {
   return parent.appendChild(el);
 };
 
-const closeDrawer = () => {
-  document.querySelector('.c-overlay').style.opacity = 0;
-  drawer.classList.remove('c-drawer--open');
-  setTimeout(() => {
-    document.querySelector('.c-overlay').remove();
-  }, 50);
-};
-
-const openDrawer = () => {
-  let newOverlay = createNode('div');
-  newOverlay.classList = 'c-overlay';
-  newOverlay.style.opacity = 0;
-  newOverlay.addEventListener('click', closeDrawer);
-  append(document.body, newOverlay);
-  setTimeout(() => {
-    newOverlay.style.opacity = 1;
-    drawer.classList.add('c-drawer--open');
-  }, 100);
-};
-
-const toggleDrawer = () => {
-  drawer.classList.contains('c-drawer--open') ?
-  closeDrawer() :
-  openDrawer();
-};
-
-
+// loader
 const emptyState = () => {
   const newText = createNode('div');
   newText.classList = 'c-empty-state';
@@ -61,7 +29,6 @@ const emptyState = () => {
   }, 500);
 };
 
-// Render Driver Standings
 const renderList = year => {
   const url = `https://ergast.com/api/f1/2019/driverStandings.json`;
   emptyState();
@@ -88,7 +55,7 @@ const renderList = year => {
 		`;
     const title = createNode('div');
     title.classList = 'c-headline';
-    title.innerHTML = `<h4 class="c-headline__title"><small class="u-text--danger">FORMULA 1</small><br />Driver Standings <small class="u-text--secondary">(${year == 'current' ? '2019' : year})</small></h4><span class="c-chip ${year == 'current' ? 'c-chip--success' : 'c-chip--secondary'}">Season ${year == 'current' ? 'in Progress' : 'Completed'}</span>`;
+    title.innerHTML = `<h4 class="c-headline__title"><small class="u-text--danger">FORMULA 1</small><br />Driver Standings <small class="u-text--secondary">(${year == 'current' ? '2019' : year})</small></h4><span class="c-chip ${year == 'current' ? 'c-chip--success' : 'c-chip--secondary'}">Season Completed'</span>`;
     append(wrapper, title);
     append(wrapper, table);
     data.MRData.StandingsTable.StandingsLists[0].DriverStandings.forEach(item => {
@@ -143,68 +110,4 @@ const renderList = year => {
   });
 };
 
-// Theme toggle
-document.getElementById('test').addEventListener('click', () => {
-  document.documentElement.classList.toggle('theme--dark');
-  document.getElementById('test').classList.toggle('c-toggle--active');
-});
-
-
 renderList('current');
-
-drawer.querySelector('.c-drawer__handle').addEventListener('click', toggleDrawer);
-
-function swipedetect(el, callback) {
-
-  var touchsurface = el,
-  swipedir,
-  startX,
-  startY,
-  distX,
-  distY,
-  threshold = 150, //required min distance traveled to be considered swipe
-  restraint = 100, // maximum distance allowed at the same time in perpendicular direction
-  allowedTime = 300, // maximum time allowed to travel that distance
-  elapsedTime,
-  startTime,
-  handleswipe = callback || function (swipedir) {};
-
-  touchsurface.addEventListener('touchstart', function (e) {
-    var touchobj = e.changedTouches[0];
-    swipedir = 'none';
-    dist = 0;
-    startX = touchobj.pageX;
-    startY = touchobj.pageY;
-    startTime = new Date().getTime(); // record time when finger first makes contact with surface
-    e.preventDefault();
-  }, false);
-
-  touchsurface.addEventListener('touchmove', function (e) {
-    e.preventDefault(); // prevent scrolling when inside DIV
-  }, false);
-
-  touchsurface.addEventListener('touchend', function (e) {
-    var touchobj = e.changedTouches[0];
-    distX = touchobj.pageX - startX; // get horizontal dist traveled by finger while in contact with surface
-    distY = touchobj.pageY - startY; // get vertical dist traveled by finger while in contact with surface
-    elapsedTime = new Date().getTime() - startTime; // get time elapsed
-    if (elapsedTime <= allowedTime) {// first condition for awipe met
-      if (Math.abs(distX) >= threshold && Math.abs(distY) <= restraint) {// 2nd condition for horizontal swipe met
-        swipedir = distX < 0 ? 'left' : 'right'; // if dist traveled is negative, it indicates left swipe
-      } else
-      if (Math.abs(distY) >= threshold && Math.abs(distX) <= restraint) {// 2nd condition for vertical swipe met
-        swipedir = distY < 0 ? 'up' : 'down'; // if dist traveled is negative, it indicates up swipe
-      }
-    }
-    handleswipe(swipedir);
-    e.preventDefault();
-  }, false);
-}
-
-swipedetect(swipeZone, function (direction) {
-  if (direction == 'up') {
-    openDrawer();
-  } else if (direction == 'down') {
-    closeDrawer();
-  }
-});
