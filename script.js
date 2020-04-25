@@ -55,14 +55,23 @@ const renderList = year => {
 		`;
     const title = createNode('div');
     title.classList = 'c-headline';
-    title.innerHTML = `<h4 class="c-headline__title"><small class="u-text--danger">FORMULA 1</small><br />Driver Standings <small class="u-text--secondary">(${year == 'current' ? '2019' : year})</small></h4><span class="c-chip ${year == 'current' ? 'c-chip--success' : 'c-chip--secondary'}">Season Completed'</span>`;
+    title.innerHTML = `<h4 class="c-headline__title"><small class="u-text--danger">FORMULA 1</small><br />Driver Standings <small class="u-text--secondary">(${year == 'current' ? '2019' : year})</small></h4><span class="c-chip ${year == 'current' ? 'c-chip--success' : 'c-chip--secondary'}">Season Completed'</span>
+    <br> <h2> Hello </h2> `;
+
+    const first_place = createNode('div');
+    first_place.classList = 'first_place_card';
+    first_place.innerHTML = "Hello";
+
+
     append(wrapper, title);
+    append(wrapper, first_place);
     append(wrapper, table);
     data.MRData.StandingsTable.StandingsLists[0].DriverStandings.forEach(item => {
       const tableBody = table.querySelector('tbody');
       let tr = createNode('tr');
       tr.classList = "c-table__row";
       tr.innerHTML = `
+        
 						<td class="c-table__cell c-table__cell--place u-text--center"><span class="c-place">${item.position}</span></td>
 					<td class="c-table__cell c-table__cell--name">${item.Driver.givenName} ${item.Driver.familyName}<br><small style="opacity: .4;">${item.Constructors[0].name}</small></td>
 					<td class="c-table__cell c-table__cell--count"><small>${item.wins}</small></td>
