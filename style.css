@@ -157,12 +157,12 @@ p {
   bottom: 0;
   border-top-left-radius: 0.8rem;
   border-top-right-radius: 0.8rem;
-  -webkit-animation: drawerClose 300ms ease-in 0s forwards;
-          animation: drawerClose 300ms ease-in 0s forwards;
+  -webkit-animation: drawerClose 0ms ease-in 0s forwards;
+          animation: drawerClose 0ms ease-in 0s forwards;
 }
 .c-drawer--open {
-  -webkit-animation: drawerOpen 300ms ease-in 0s forwards;
-          animation: drawerOpen 300ms ease-in 0s forwards;
+  -webkit-animation: drawerOpen 0ms ease-in 0s forwards;
+          animation: drawerOpen 0ms ease-in 0s forwards;
 }
 .c-drawer--open .c-drawer__handle:after {
   content: 'CLOSE';
